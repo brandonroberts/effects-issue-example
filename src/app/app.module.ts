@@ -10,6 +10,7 @@ import {PostEffects} from './store/app.effects';
 import {PostService} from './service/post.service';
 import {ConfigurationService, loadConfiguration} from './service/configuration.service';
 import {HttpClientModule} from '@angular/common/http';
+import { provideBootstrapEffects } from './utils';
 
 
 @NgModule({
@@ -20,9 +21,7 @@ import {HttpClientModule} from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot(reducer),
-    EffectsModule.forRoot([
-      PostEffects
-    ])
+    EffectsModule.forRoot([]),
   ],
   providers: [
     ConfigurationService,
@@ -32,7 +31,10 @@ import {HttpClientModule} from '@angular/common/http';
       useFactory: loadConfiguration,
       deps: [ConfigurationService],
       multi: true
-    }
+    },
+    provideBootstrapEffects([
+      PostEffects
+    ])
   ],
   bootstrap: [AppComponent]
 })
